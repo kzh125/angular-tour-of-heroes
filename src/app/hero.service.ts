@@ -11,17 +11,25 @@ import { MessageService } from './message.service';
 })
 export class HeroService {
   private heroesUrl = 'http://127.0.0.1:4201/api/heroes';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient, private messageService: MessageService) { }
 
   getHeroes(): Observable<Hero[]> {
     this.log('fetched heroes');
-    return this.http.get<Hero[]>(this.heroesUrl)
+    return this.http.get<Hero[]>(this.heroesUrl);
   }
 
   getHero(id: number): Observable<Hero> {
     this.log(`fetched hero id=${id}`);
-    return this.http.get<Hero>(`${this.heroesUrl}/${id}`)
+    return this.http.get<Hero>(`${this.heroesUrl}/${id}`);
+  }
+
+  updateHero(hero: Hero): Observable<any> {
+    this.log(`updated hero id=${hero.id}`);
+    return this.http.put(this.heroesUrl, hero, this.httpOptions);
   }
 
   private log(message: string) {
