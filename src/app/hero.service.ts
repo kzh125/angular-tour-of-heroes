@@ -24,12 +24,20 @@ export class HeroService {
 
   getHero(id: number): Observable<Hero> {
     this.log(`fetched hero id=${id}`);
-    return this.http.get<Hero>(`${this.heroesUrl}/${id}`);
+    const url = `${this.heroesUrl}/${id}`
+    return this.http.get<Hero>(url);
   }
 
   updateHero(hero: Hero): Observable<any> {
     this.log(`updated hero id=${hero.id}`);
     return this.http.put(this.heroesUrl, hero, this.httpOptions);
+  }
+
+  deleteHero(hero: Hero | number): Observable<any> {
+    const id = typeof hero === "number" ? hero : hero.id;
+    this.log(`deleted hero id=${id}`);
+    const url = `${this.heroesUrl}/${id}`
+    return this.http.delete(url);
   }
 
   private log(message: string) {

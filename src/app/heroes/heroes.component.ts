@@ -11,7 +11,7 @@ import { HeroService } from '../hero.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes$: Observable<Hero[]>;
+  heroes: Hero[];
 
   constructor(private heroService: HeroService) { }
 
@@ -20,7 +20,14 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes() {
-    this.heroes$ = this.heroService.getHeroes();
+    this.heroService.getHeroes().
+      subscribe(heroes => this.heroes = heroes);
+  }
+
+  delete(hero: Hero) {
+
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
   }
 
 }
