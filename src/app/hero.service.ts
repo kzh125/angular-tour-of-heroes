@@ -40,6 +40,11 @@ export class HeroService {
     return this.http.delete(url);
   }
 
+  addHero(hero: Hero): Observable<Hero> {
+    this.log(`added hero id=${hero.id}`);
+    return this.http.post<Hero>(this.heroesUrl, hero, this.httpOptions);
+  }
+
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
   }
