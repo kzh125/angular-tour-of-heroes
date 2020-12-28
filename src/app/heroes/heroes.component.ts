@@ -12,7 +12,7 @@ import { MessageService } from '../message.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent implements OnInit {
-  heroes: Observable<Hero[]>;
+  heroes$: Observable<Hero[]>;
   selectedHero: Hero;
 
   constructor(private heroService: HeroService, private messageService: MessageService) { }
@@ -27,7 +27,7 @@ export class HeroesComponent implements OnInit {
   }
 
   getHeroes() {
-    this.heroes = this.heroService.getHeroes();
+    this.heroes$ = this.heroService.getHeroes();
   }
 
 }
