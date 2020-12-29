@@ -60,7 +60,7 @@ func addHero(hero *Hero) {
 	heros = append(heros, hero)
 }
 
-func deleteHero(id string) {
+func deleteHero(id string) *Hero {
 	var i int
 	var h *Hero
 	for i, h = range heros {
@@ -69,6 +69,7 @@ func deleteHero(id string) {
 		}
 	}
 	heros = append(heros[:i], heros[i+1:]...)
+	return h
 }
 
 func searchHero(term string) []*Hero {
@@ -116,8 +117,8 @@ func main() {
 	// delete hero by id
 	r.DELETE("/api/heroes/:id", func(c *gin.Context) {
 		id := c.Param("id")
-		deleteHero(id)
-		c.JSON(200, "ok")
+		h := deleteHero(id)
+		c.JSON(200, h)
 	})
 
 	// search hero by term
